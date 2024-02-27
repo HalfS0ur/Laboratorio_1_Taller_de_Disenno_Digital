@@ -28,6 +28,8 @@ jobs:
         working-directory: mux_4_1
       - if: steps.changes.outputs.mux == 'false'
         run: echo"No changes detected in directory, skipping testbench execution."
+      - name: Check if changes are made to mux_4_1 directory
+        run: echo "Changes made to mux_4_1 directory:${{ contains(github.event.head_commit.modified, 'mux_4_1/') }}"
       - name: Run testbench
         run: make
         working-directory: ./mux_4_1

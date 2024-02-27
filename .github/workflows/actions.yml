@@ -23,7 +23,8 @@ jobs:
             mux:
               - 'mux_4_1/**'
       - if: steps.changes.outputs.mux == 'true'
-        run: cd mux_4_1
+        run: make
+        working-directory: mux_4_1
       - run: ls
       - run: cd mux_4_1
       - run: ls

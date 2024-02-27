@@ -31,5 +31,6 @@ jobs:
       - name: Check if changes are made to mux_4_1 directory
         run: echo "Changes made to mux_4_1 directory:${{ contains(github.event.head_commit.modified, 'mux_4_1/') }}"
       - name: Run testbench
+        if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'mux_4_1/')
         run: make
         working-directory: ./mux_4_1

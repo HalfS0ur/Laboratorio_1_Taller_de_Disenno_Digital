@@ -11,7 +11,7 @@ module mux_4_1 #(
     output logic [ANCHO-1:0] salida_o
     );
     
-    always_comb begin //always_comb se ejecuta una vez en t=0 y es sensible a los cambios en una funcion como seleccion_i
+    always_comb begin //always_comb se ejecuta una vez en t=0 y es sensible a los cambios en una funcion como seleccion_i .
         case (seleccion_i)
             2'b00: salida_o = entrada0_i;
             2'b01: salida_o = entrada1_i;

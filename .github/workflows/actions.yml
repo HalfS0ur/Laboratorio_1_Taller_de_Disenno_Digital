@@ -26,5 +26,6 @@ jobs:
         run: cd mux_4_1
       - run: ls
       - run: cd mux_4_1
+      - run: ls
       - name: Running testbench
         run: make

@@ -26,3 +26,5 @@ jobs:
         if: steps.changes.outputs.mux == 'true'
         run: make
         working-directory: mux_4_1
+      - if: steps.changes.outputs.mux == 'false'
+        run: echo"No changes detected in directory, skipping testbench execution."

@@ -1,1 +1,22 @@
-
+name: Github actions cocotb testbench
+run-name: ${{ github.actor }} is running a testbench
+on: [push]
+jobs:
+  Run-Cocotb-Testbench:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+        with:
+          path: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'mux_4_1/') && 'mux_4_1' || '' }}
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb
+      - run: cocotb-config --version
+      - name: Running testbench
+        run: make

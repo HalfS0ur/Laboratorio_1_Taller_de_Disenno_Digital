@@ -18,5 +18,6 @@ jobs:
       - name: Installing dependencies
         run: pip install cocotb
       - run: cocotb-config --version
+      - run: ls
       - name: Running testbench
         run: make

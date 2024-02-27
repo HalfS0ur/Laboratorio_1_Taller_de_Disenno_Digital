@@ -22,11 +22,7 @@ jobs:
           filters: |
             mux:
               - 'mux_4_1/**'
-      - if: steps.changes.outputs.mux == 'true'
+      - name: Running testbench
+        if: steps.changes.outputs.mux == 'true'
         run: make
         working-directory: mux_4_1
-      - run: ls
-      - run: cd mux_4_1
-      - run: ls
-      - name: Running testbench
-        run: make

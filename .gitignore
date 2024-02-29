@@ -1,4 +1,7 @@
 */results.xml
 */__pycache__/
 */sim_build/
-/sumadores/CLA/results.xml
+
+/sumadores/*/sim_build/
+/sumadores/*/__pycache__/
+/sumadores/*/results.xml

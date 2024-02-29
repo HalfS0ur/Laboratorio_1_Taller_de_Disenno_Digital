@@ -61,8 +61,8 @@ jobs:
               -'sumadores/RCA/**'
       - name: Running testbench
         if: steps.changes.outputs.mux == 'true'
+        working-directory: ./mux_4_1
         run: make
-        working-directory: mux_4_1
 
       - if: steps.changes.outputs.alu == 'true'
         run: make

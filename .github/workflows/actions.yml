@@ -2,6 +2,33 @@ name: Github actions cocotb testbench
 run-name: ${{ github.actor }} is running a testbench
 on: [push]
 jobs:
+  cambios:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: read
+
+    outputs:
+      mux: ${{ steps.filter.outputs.mux }}
+
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            mux:
+              - 'mux_4_1/**'
+    
+
+  prueba_jobs:
+    needs: cambios
+    if: ${{ needs.changes.outputs.mux == 'true' }}
+    runs-on: ubuntu-latest
+    steps: 
+      - run: echo"Test was successful :)"
+
+
+      
   Run-Cocotb-Testbench:
     runs-on: ubuntu-latest
     steps:

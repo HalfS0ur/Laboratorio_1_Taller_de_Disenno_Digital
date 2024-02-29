@@ -14,7 +14,7 @@ async def test_RCA(dut):
         dut.cin.value = entrada_carry
         
         resultado_esperado = (entrada_a + entrada_b + entrada_carry) & 0xFF
-        logica_carry = 1 if entrada_a + entrada_b + entrada_carry >= 255 else 0
+        logica_carry = 1 if entrada_a + entrada_b + entrada_carry > 255 else 0
         
         await Timer(1, 'ns') 
 

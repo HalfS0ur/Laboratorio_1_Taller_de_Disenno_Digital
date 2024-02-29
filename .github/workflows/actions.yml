@@ -1,0 +1,42 @@
+name: Github actions cocotb testbench
+run-name: ${{ github.actor }} is running a testbench
+on: [push]
+jobs:
+  Run-Cocotb-Testbench:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb
+      - run: cocotb-config --version
+      - name: Checking last commit
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            mux:
+              - 'mux_4_1/**'
+      - name: Running testbench
+        if: steps.changes.outputs.mux == 'true'
+        run: make
+        working-directory: mux_4_1
+      - if: steps.changes.outputs.mux == 'false'
+        run: echo"No changes detected in directory, skipping testbench execution."
+      - name: Check if changes are made to mux_4_1 directory
+        run: echo "Changes made to mux_4_1 directory:${{ contains(github.event.head_commit.modified, 'mux_4_1/') }}"
+      - name: Run testbench
+        if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'mux_4_1/')
+        run: make | tee testbench_output.txt
+        working-directory: ./mux_4_1
+      - name: Upload testbench output
+        if: steps.check_changes.outputs.check_changes == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: testbench-output
+          path: testbench_output.txt

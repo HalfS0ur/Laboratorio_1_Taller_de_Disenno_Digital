@@ -174,3 +174,36 @@ async def test_XOR(dut):
         dut.ALUb_i.value = valor_b
         await Timer(1, 'ns')
         assert dut.ALUresult_o.value == valor_a ^ valor_b, f"Mux output salida_o was incorrect. Got {dut.ALUresult_o.value}"
+
+@cocotb.test()
+async def test_corrimiento_izquierda(dut):
+    '''Prueba de la operación corrimiento a la izquierda'''
+    for run in range (10):
+        dut.ALUcontrol_i.value = 8
+        valor_a = random.randint(0, 15)
+        dut.ALUa_i.value = valor_a
+        valor_b = random.randint(0, 15)
+        dut.ALUb_i.value = valor_b
+        valor_flag_in = random.randint(0, 1)
+        dut.ALUflagin_i.value = valor_flag_in
+
+        if valor_b <= 4:
+            valor_flag_out = (valor_a >> (4 - valor_b)) & 0b1
+            await Timer(2, 'ns')
+            assert dut.ALUflags_o.value == valor_flag_out, f"Mux output salida_o was incorrect. Got {dut.ALUflags_o.value}"
+        
+        #else: #valor_b > 4:
+            #valor_flag_out = valor_flag_in
+            #await Timer(2, 'ns')
+            #assert dut.ALUflags_o.value == valor_flag_out, f"Mux output salida_o was incorrect. Got {dut.ALUflags_o.value}"
+        
+        #if valor_flag_in == 0:
+            #resultado = (valor_a << valor_b) & 0xF
+            #await Timer(2, 'ns')
+            #assert dut.ALUresult_o.value == resultado, f"Mux output salida_o was incorrect. Got {dut.ALUresult_o.value}"
+
+        #elif valor_flag_in == 1:
+            #resultado = ((valor_a << valor_b) | ((1 << valor_b) - 1))
+            #resultado &= 0b1111
+            #await Timer(2, 'ns')
+            #assert dut.ALUresult_o.value == resultado, f"Mux output salida_o was incorrect. Got {dut.ALUresult_o.value} expected {resultado}"

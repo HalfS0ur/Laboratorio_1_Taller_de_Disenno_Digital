@@ -12,7 +12,10 @@ jobs:
       mux: ${{ steps.filter.outputs.mux }}
 
     steps:
-      - uses: dorny/paths-filter@v3
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Checking for changes
+        uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
@@ -28,7 +31,7 @@ jobs:
       - run: echo"Test was successful :)"
 
 
-      
+
   Run-Cocotb-Testbench:
     runs-on: ubuntu-latest
     steps:

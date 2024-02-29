@@ -4,7 +4,7 @@ on: [push]
 jobs:
   cambios:
     runs-on: ubuntu-latest
-    
+
     outputs:
       mux: ${{ steps.filter.outputs.mux }}
 
@@ -25,7 +25,7 @@ jobs:
     if: ${{ needs.changes.outputs.mux == 'true' }}
     runs-on: ubuntu-latest
     steps: 
-      - run: echo"Test was successful :)"
+      - run: echo "Test was successful :)"
 
 
 

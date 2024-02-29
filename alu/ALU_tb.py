@@ -1,5 +1,5 @@
-import random
 import cocotb
+import random
 from cocotb.triggers import Timer
 
 @cocotb.test()

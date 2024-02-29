@@ -1,0 +1,54 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x56288cc46d90 .scope package, "$unit" "$unit" 2 1;
+ .timescale -9 -12;
+S_0x56288cc46f20 .scope module, "full_adder" "full_adder" 3 3;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "cin";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "cout";
+o0x7f1f92d7f108 .functor BUFZ 1, C4<z>; HiZ drive
+o0x7f1f92d7f138 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x56288cc91f30 .functor XOR 1, o0x7f1f92d7f108, o0x7f1f92d7f138, C4<0>, C4<0>;
+o0x7f1f92d7f168 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x56288cc91fc0 .functor XOR 1, L_0x56288cc91f30, o0x7f1f92d7f168, C4<0>, C4<0>;
+L_0x56288cc92060 .functor AND 1, o0x7f1f92d7f108, o0x7f1f92d7f138, C4<1>, C4<1>;
+L_0x56288cc921a0 .functor AND 1, o0x7f1f92d7f138, o0x7f1f92d7f168, C4<1>, C4<1>;
+L_0x56288cc92290 .functor OR 1, L_0x56288cc92060, L_0x56288cc921a0, C4<0>, C4<0>;
+L_0x56288cc923a0 .functor AND 1, o0x7f1f92d7f168, o0x7f1f92d7f108, C4<1>, C4<1>;
+L_0x56288cc92450 .functor OR 1, L_0x56288cc92290, L_0x56288cc923a0, C4<0>, C4<0>;
+v0x56288cc81000_0 .net *"_ivl_0", 0 0, L_0x56288cc91f30;  1 drivers
+v0x56288cc91720_0 .net *"_ivl_10", 0 0, L_0x56288cc923a0;  1 drivers
+v0x56288cc91800_0 .net *"_ivl_4", 0 0, L_0x56288cc92060;  1 drivers
+v0x56288cc918c0_0 .net *"_ivl_6", 0 0, L_0x56288cc921a0;  1 drivers
+v0x56288cc919a0_0 .net *"_ivl_8", 0 0, L_0x56288cc92290;  1 drivers
+v0x56288cc91ad0_0 .net "a", 0 0, o0x7f1f92d7f108;  0 drivers
+v0x56288cc91b90_0 .net "b", 0 0, o0x7f1f92d7f138;  0 drivers
+v0x56288cc91c50_0 .net "cin", 0 0, o0x7f1f92d7f168;  0 drivers
+v0x56288cc91d10_0 .net "cout", 0 0, L_0x56288cc92450;  1 drivers
+v0x56288cc91dd0_0 .net "sum", 0 0, L_0x56288cc91fc0;  1 drivers
+S_0x56288cc80e70 .scope module, "cocotb_iverilog_dump" "cocotb_iverilog_dump" 4 1;
+ .timescale -9 -12;
+    .scope S_0x56288cc80e70;
+T_0 ;
+    %vpi_call/w 4 3 "$dumpfile", "sim_build/full_adder.fst" {0 0 0};
+    %vpi_call/w 4 4 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x56288cc46f20 {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "/home/kendall/Documents/Actions/test_actions/sumadores/FA/full_adder.sv";
+    "sim_build/cocotb_iverilog_dump.v";

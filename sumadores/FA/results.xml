@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1709228873" />
+    <testcase name="test_full_adder" classname="full_adder_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/FA/full_adder_tb.py" lineno="5" time="0.003681659698486328" sim_time_ns="16.001" ratio_time="4346.137696153349" />
+  </testsuite>
+</testsuites>

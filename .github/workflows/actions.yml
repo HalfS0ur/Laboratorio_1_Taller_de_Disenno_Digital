@@ -15,6 +15,7 @@ jobs:
         uses: dorny/paths-filter@v3
         id: filter
         with:
+          base: ${{ github.ref }}
           filters: |
             mux:
               - 'mux_4_1/**'
@@ -25,10 +26,19 @@ jobs:
     if: ${{ needs.changes.outputs.mux == 'true' }}
     runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v4
       - run: echo "Test was successful :)"
 
+  test:
+    needs: cambios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo ${{ needs.changes.outputs.mux }}
 
 
+
+#####################################################################################################
   Run-Cocotb-Testbench:
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +71,7 @@ jobs:
               -'sumadores/RCA/**'
       - name: Running testbench
         if: steps.changes.outputs.mux == 'true'
-        working-directory: ./mux_4_1
+        working-directory: ./mux_4_1/**
         run: make
 
       - if: steps.changes.outputs.alu == 'true'

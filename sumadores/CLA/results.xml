@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1709237275" />
-    <testcase name="test_CLA" classname="CLA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/CLA/CLA_tb.py" lineno="5" time="0.03573274612426758" sim_time_ns="256.001" ratio_time="7164.32482154343" />
+    <property name="random_seed" value="1709324170" />
+    <testcase name="test_CLA" classname="CLA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/CLA/CLA_tb.py" lineno="5" time="0.03315162658691406" sim_time_ns="512.001" ratio_time="15444.21956665324" />
   </testsuite>
 </testsuites>

@@ -14,6 +14,6 @@ async def test_switches_leds (dut):
         await Timer(5, 'ns')
         
         if boton_pi == 0:
-            assert dut.led_po.value == switch_pi, f"Mux output salida_o was incorrect." 
+            assert dut.led_po.value == switch_pi, f"LED output salida_o was incorrect." 
 
-        assert dut.led_po.value != switch_pi, f"Mux output salida_o was incorrect."
+        assert dut.led_po.value != switch_pi, f"LED output salida_o was incorrect."

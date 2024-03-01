@@ -21,15 +21,15 @@ async def test_mux_dumb(dut):
 
     dut.seleccion_i.value = 0b01
     await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_1, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_0}"
+    assert dut.salida_o.value == entrada_1, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_1}"
 
     dut.seleccion_i.value = 0b10
     await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_2, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_0}"
+    assert dut.salida_o.value == entrada_2, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_2}"
 
     dut.seleccion_i.value = 0b11
     await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_3, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_0}"
+    assert dut.salida_o.value == entrada_3, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_3}"
 
 @cocotb.test()
 async def test_mux_proper(dut):

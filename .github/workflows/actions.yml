@@ -27,7 +27,12 @@ jobs:
     steps: 
       - run: echo "Test was successful :)"
 
-
+  test:
+    needs: cambios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo ${{ needs.changes.outputs.mux }}
 
   Run-Cocotb-Testbench:
     runs-on: ubuntu-latest

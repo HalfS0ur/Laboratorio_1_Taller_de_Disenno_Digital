@@ -2,43 +2,6 @@ name: Github actions cocotb testbench
 run-name: ${{ github.actor }} is running a testbench
 on: [push]
 jobs:
-  cambios:
-    runs-on: ubuntu-latest
-
-    outputs:
-      mux: ${{ steps.filter.outputs.mux }}
-
-    steps:
-      - name: Checking out repository code
-        uses: actions/checkout@v4
-      - name: Checking for changes
-        uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          base: ${{ github.ref }}
-          filters: |
-            mux:
-              - 'mux_4_1/**'
-    
-
-  prueba_jobs:
-    needs: cambios
-    if: ${{ needs.changes.outputs.mux == 'true' }}
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v4
-      - run: echo "Test was successful :)"
-
-  test:
-    needs: cambios
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: echo ${{ needs.changes.outputs.mux }}
-
-
-
-#####################################################################################################
   Run-Cocotb-Testbench:
     runs-on: ubuntu-latest
     steps:
@@ -58,17 +21,19 @@ jobs:
         with:
           filters: |
             mux:
-              - 'mux_4_1/**'
+              - 'mux_4_1/'
             alu:
-              - 'alu/**'
+              - 'alu/'
             swl:
-              -'switches_leds/**'
+              -'switches_leds/'
             cla:
-              -'sumadores/CLA/**'
+              -'sumadores/CLA/'
             fa:
-              -'sumadores/FA/**'
+              -'sumadores/FA/'
             rca:
-              -'sumadores/RCA/**'
+              -'sumadores/RCA/'
+            dsp:
+              -'display_7_segmentos/'
       - name: Running testbench
         if: steps.changes.outputs.mux == 'true'
         working-directory: ./mux_4_1/**
@@ -76,23 +41,68 @@ jobs:
 
       - if: steps.changes.outputs.alu == 'true'
         run: make
-        working-directory: alu
+        working-directory: ./alu/
 
       - if: steps.changes.outputs.swl == 'true'
         run: make
-        working-directory: switches_leds
+        working-directory: ./switches_leds/
 
       - if: steps.changes.outputs.cla == 'true'
         run: make
-        working-directory: sumadores/CLA
+        working-directory: ./sumadores/CLA/
 
       - if: steps.changes.outputs.fa == 'true'
         run: make
-        working-directory: sumadores/FA
+        working-directory: ./sumadores/FA/
 
       - if: steps.changes.outputs.rca == 'true'
         run: make
-        working-directory: sumadores/RCA
+        working-directory: ./sumadores/RCA/
+
+      - if: steps.changes.outputs.dsp == 'true'
+        run: make
+        working-directory: ./display_7_segmentos/
 
       - if: steps.changes.outputs.mux == 'false'
         run: echo"No changes detected in directory, skipping testbench execution."
+
+
+
+
+
+        
+
+
+#cambios:
+    #runs-on: ubuntu-latest
+
+    #outputs:
+      #mux: ${{ steps.filter.outputs.mux }}
+
+    #steps:
+     # - name: Checking out repository code
+     #   uses: actions/checkout@v4
+     # - name: Checking for changes
+     #   uses: dorny/paths-filter@v3
+     #   id: filter
+      #  with:
+      #    base: ${{ github.ref }}
+       #   filters: |
+       #     mux:
+        #      - 'mux_4_1/**'
+    
+
+  #prueba_jobs:
+   # needs: cambios
+    #if: ${{ needs.changes.outputs.mux == 'true' }}
+    #runs-on: ubuntu-latest
+    #steps: 
+     # - uses: actions/checkout@v4
+     # - run: echo "Test was successful :)"
+
+  #test:
+   # needs: cambios
+   # runs-on: ubuntu-latest
+   # steps:
+     # - uses: actions/checkout@v4
+     # - run: echo ${{ needs.changes.outputs.mux }}

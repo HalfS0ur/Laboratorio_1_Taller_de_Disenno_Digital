@@ -21,21 +21,21 @@ jobs:
         with:
           filters: |
             mux:
-              - 'mux_4_1/'
+              - 'mux_4_1/**'
             alu:
-              - 'alu/'
+              - 'alu/**'
             swl:
-              -'switches_leds/'
+              -'switches_leds/**'
             cla:
-              -'sumadores/CLA/'
+              -'sumadores/CLA/**'
             fa:
-              -'sumadores/FA/'
+              -'sumadores/FA/**'
             rca:
-              -'sumadores/RCA/'
+              -'sumadores/RCA/**'
             dsp:
-              -'display_7_segmentos/'
+              -'display_7_segmentos/**'
       - name: Running testbench
-        if: steps.changes.outputs.mux == 'false'
+        if: steps.changes.outputs.mux == 'true'
         run: make -C /mux_4_1
 
       - if: steps.changes.outputs.alu == 'true'

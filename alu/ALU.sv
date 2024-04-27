@@ -19,7 +19,7 @@ module ALU #(
 
     always_comb begin
         case(ALUcontrol_i)
-             4'h0: begin //AND bitwise
+             4'h0: begin //AND bitwise ...
                     ALUresult_o = ALUa_i & ALUb_i;
                   end
                   

@@ -7,6 +7,8 @@ jobs:
     outputs:
       mux: ${{ steps.filter.outputs.mux }}
       alu: ${{ steps.filter.outputs.alu }}
+      display: ${{ steps.filter.outputs.display }}
+      sw_led : ${{ steps.filter.outputs.sw_led }} 
     steps:
     - name: checking out repository code
       uses: actions/checkout@v4
@@ -19,6 +21,10 @@ jobs:
             - 'mux_4_1/**'
           alu:
             - 'alu/**'
+          display:
+            - 'display_7_segmentos/**'
+          sw_led:
+            - 'switches_leds/**'
 
   mux:
     needs: changes
@@ -62,3 +68,46 @@ jobs:
       - run: cocotb-config --version
       - run: make
       - run: ls
+
+  display:
+    needs: changes
+    if: ${{ needs.changes.outputs.display == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./display_7_segmentos
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb
+      - run: cocotb-config --version
+      - run: make
+      - run: ls
+
+  sw_led:
+    needs: changes
+    if: ${{ needs.changes.outputs.sw_led == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./switches_leds
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb
+      - run: cocotb-config --version
+      - run: make

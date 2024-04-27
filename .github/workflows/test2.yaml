@@ -1,1 +1,47 @@
+name: Prueba verificacion de archivos
+run-name: ${{ github.actor }} está intentando algo
+on: [push]
+jobs: 
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      mux: ${{ steps.filter.outputs.mux }}
+      alu: ${{ steps.filter.outputs.alu }}
+    steps:
+    - name: checking out repository code
+      uses: actions/checkout@v4
+    - name: checking for changes
+      uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          mux:
+            - 'mux_4_1/**'
+          alu:
+            - 'alu/**'
 
+  setup_environment:
+    needs: changes
+    if: ${{ needs.changes.outputs.mux == 'true' }} || ${{ needs.changes.outputs.alu == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb
+      - run: cocotb-config --version 
+           
+
+  mux:
+    needs: setup_environment
+    if: ${{ needs.changes.outputs.mux == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mux_4_1
+    steps:
+      - run: make

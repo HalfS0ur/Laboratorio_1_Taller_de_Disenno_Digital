@@ -24,6 +24,19 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.mux == 'true' }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mux_4_1
     steps:
       - name: Checking out repository code
         uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb
+      - run: cocotb-config --version
+      - run: make

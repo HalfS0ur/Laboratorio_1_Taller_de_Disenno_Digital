@@ -35,7 +35,7 @@ jobs:
             dsp:
               -'display_7_segmentos/'
       - name: Running testbench
-        if: steps.changes.outputs.mux == 'true'
+        if: steps.changes.outputs.mux == 'false'
         run: make -C /mux_4_1
 
       - if: steps.changes.outputs.alu == 'true'

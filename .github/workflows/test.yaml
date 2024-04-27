@@ -1,5 +1,5 @@
 name: Prueba verificacion de archivos
-run-name: ${{ github.actor }} is running a testbench
+run-name: ${{ github.actor }} is checking the files
 on: [push]
 jobs: 
   check:
@@ -20,7 +20,7 @@ jobs:
           git diff --name-only HEAD^ HEAD
 
           echo "++++++++++++ check paths of modified files ++++++++++"
-          dit diff --name-only HEAD^ HEAD &gt; files.txt
+          git diff --name-only HEAD^ HEAD &gt; files.txt
           while IFS+ read -r file
           do
             echo $file

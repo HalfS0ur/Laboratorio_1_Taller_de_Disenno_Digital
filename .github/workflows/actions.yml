@@ -36,8 +36,7 @@ jobs:
               -'display_7_segmentos/'
       - name: Running testbench
         if: steps.changes.outputs.mux == 'true'
-        working-directory: ./mux_4_1/**
-        run: make
+        run: make -C /mux_4_1
 
       - if: steps.changes.outputs.alu == 'true'
         run: make

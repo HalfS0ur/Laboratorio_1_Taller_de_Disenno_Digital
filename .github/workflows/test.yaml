@@ -8,7 +8,10 @@ jobs:
       mux: ${{ steps.filter.outputs.mux }}
       alu: ${{ steps.filter.outputs.alu }}
     steps:
-    - uses: dorny/paths-filter@v3
+    - name: checking out repository code
+      uses: actions/checkout@v4
+    - name: checking for changes
+      uses: dorny/paths-filter@v3
       id: filter
       with:
         filters: |

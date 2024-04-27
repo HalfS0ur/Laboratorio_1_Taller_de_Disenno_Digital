@@ -1,4 +1,4 @@
-name: Prueba verificacion de archivos
+name: Aver al cine
 run-name: ${{ github.actor }} está intentando algo
 on: [push]
 jobs: 

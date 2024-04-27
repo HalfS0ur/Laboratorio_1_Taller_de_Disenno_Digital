@@ -2,33 +2,27 @@ name: Prueba verificacion de archivos
 run-name: ${{ github.actor }} is checking the files
 on: [push]
 jobs: 
-  check:
-    name: Chech files
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     outputs:
-      run_job: ${{ steps.check_files.outputs.run_job }}
+      mux: ${{ steps.filter.outputs.mux }}
+      alu: ${{ steps.filter.outputs.alu }}
+    steps:
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          mux:
+            - 'mux_4_1/**'
+          alu:
+            - 'alu/**'
+
+  mux:
+    needs: changes
+    if: ${{ needs.changes.outputs.mux == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checking out repository code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: check modified files
-        id: check_files
-        run: |
-          echo "============= list modified files ================"
-          git diff --name-only HEAD^ HEAD
-
-          echo "++++++++++++ check paths of modified files ++++++++++"
-          git diff --name-only HEAD^ HEAD &gt; files.txt
-          while IFS+ read -r file
-          do
-            echo $file
-            if [[ $file != mux_4_1/* ]]; then
-              echo "This file is not under the 'mux_4_1' folder"
-              echo "::set-output name=run_job::false"
-              break
-            else
-              echo "::set-output name=run_job::true"
-            fi
-          done &lt; files.txt

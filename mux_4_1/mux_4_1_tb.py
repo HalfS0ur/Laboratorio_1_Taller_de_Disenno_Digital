@@ -34,7 +34,7 @@ async def test_mux_dumb(dut):
 @cocotb.test()
 async def test_mux_proper(dut):
     """Test del multiplexor 4 a 1 hecho más mejor (testbench autoverificable)"""
-    #Inicializar variables
+    #Inicializar variables.
     dut.entrada0_i.value = 0b0
     dut.entrada1_i.value = 0b0
     dut.entrada2_i.value = 0b0

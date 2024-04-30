@@ -18,7 +18,7 @@ jobs:
       with:
         filters: |
           mux:
-            - 'mux_4_1/**'
+            - 'mux_4_1/**/*.sv'
           alu:
             - 'alu/**'
           display:

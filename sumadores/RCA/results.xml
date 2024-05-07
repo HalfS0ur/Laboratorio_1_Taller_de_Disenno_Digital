@@ -1,8 +1,0 @@
-<testsuites name="results">
-  <testsuite name="all" package="all">
-    <property name="random_seed" value="1709236681" />
-    <testcase name="test_RCA" classname="RCA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/RCA/RCA_tb.py" lineno="5" time="0.0010800361633300781" sim_time_ns="1.001" ratio_time="926.8208176600441">
-      <failure message="Test failed with RANDOM_SEED=1709236681" />
-    </testcase>
-  </testsuite>
-</testsuites>

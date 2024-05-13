@@ -17,7 +17,7 @@ def check_xml_for_string(xml_file, search_string):
         return False
 
 # Path to the XML file
-xml_file_path = "alu/results.xml"
+xml_file_path = "results.xml"
 
 # String to search for in the XML file
 search_string = "Test failed"

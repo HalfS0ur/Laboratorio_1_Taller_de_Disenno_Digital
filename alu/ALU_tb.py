@@ -53,7 +53,7 @@ async def prueba_suma_sin_carry(dut):
             resultado_carry = ((valor_b + valor_a) >> 4) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado_suma, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_suma}"
-            assert dut.ALUflags_o.value == resultado_carry, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_carry}"
+            assert dut.ALUflags_o.value == resultado_carry, f"El valor de la salida ALUflags_o es incorrecto. Se obtuvo {dut.ALUflags_o.value}, se esperaba {resultado_carry}"
 
 ########################### manejar numeros negativos
 
@@ -70,10 +70,10 @@ async def prueba_suma_con_carry(dut):
         for valor_b in range(RANGO):
             dut.ALUb_i.value = valor_b
             resultado_suma = (valor_a + valor_b + 1) & 0xF
-            resultado_carry = ((valor_b + valor_a) >> 4) & 1
+            resultado_carry = ((valor_a + valor_b + 1) >> 4) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado_suma, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_suma}"
-            assert dut.ALUflags_o.value == resultado_carry, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_carry}"
+            assert dut.ALUflags_o.value == resultado_carry, f"El valor de la salida ALUflags_o es incorrecto. Se obtuvo {dut.ALUflags_o.value}, se esperaba {resultado_carry}"
 
 @cocotb.test()
 async def test_incrementar_1(dut):
@@ -125,25 +125,20 @@ async def test_NOT(dut):
     dut.ALUa_i.value = 0
     dut.ALUb_i.value = 0
     dut.ALUflagin_i.value = 0
-    dut.ALUcontrol_i.value = 0
+    dut.ALUcontrol_i.value = 5
 
-    for test_a in range (10):
-        dut.ALUcontrol_i.value = 5
-        valor_a = random.randint(0, 15)
+    for valor_a in range (RANGO):
         dut.ALUa_i.value = valor_a
-        dut.ALUflagin_i.value = 0
         resultado_not_a = ~valor_a & 0xF
         await Timer(1, 'ns')
-        assert dut.ALUresult_o.value == resultado_not_a, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {(resultado_not_a)}"
+        assert dut.ALUresult_o.value == resultado_not_a, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_not_a}"
 
-    for test_b in range (10):
-        dut.ALUcontrol_i.value = 5
-        valor_b = random.randint(0, 15)
+    for valor_b in range (RANGO):
         dut.ALUb_i.value = valor_b
         dut.ALUflagin_i.value = 1
         resultado_not_b = ~valor_b & 0xF
         await Timer(1, 'ns')
-        assert dut.ALUresult_o.value == resultado_not_b, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {(resultado_not_b)}"
+        assert dut.ALUresult_o.value == resultado_not_b, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_not_b}"
 
 @cocotb.test()
 async def test_resta(dut):

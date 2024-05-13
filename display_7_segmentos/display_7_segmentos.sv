@@ -5,7 +5,7 @@ module display_7_segmentos(
     input logic [15:0] sw_pi,
     input logic boton_izquierda_pi,
     input logic boton_derecha_pi,
-    //Definición de la salida para el decodificador..
+    //Definición de la salida para el decodificador....
     output logic [6:0] LED_o
     );
     logic [3:0] salida_mux_o;

@@ -68,6 +68,8 @@ jobs:
       - run: cocotb-config --version
       - run: make
       - run: ls
+      - name: Checking for errors
+        run: python3 parse.py
 
   display:
     needs: changes

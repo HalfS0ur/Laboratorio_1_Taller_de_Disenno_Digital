@@ -91,7 +91,24 @@ jobs:
         run: pip install cocotb
       - run: cocotb-config --version
       - run: make
-      - run: ls
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse(results.xml)
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+              print(f"The string '{search_string}' is present in the XML file.")
+              sys.exit(1)
+              else:
+              print(f"The string '{search_string}' is not present in the XML file.")
+              sys.exit(0)
+            except Exception as e:
+            print("An error occurred:", e)
+            sys.exit(1)
 
   sw_led:
     needs: changes

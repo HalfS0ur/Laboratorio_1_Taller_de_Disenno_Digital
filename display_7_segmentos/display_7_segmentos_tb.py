@@ -26,27 +26,44 @@ async def test_7_segmentos(dut):
     }
         return mapeo.get(segmento, int('1111111', 2))
 
-    for run in range (256):
-        valor_switches = random.randint(0, 65535)
+    for combinacion in range (2**16):
+        valor_switches = combinacion
         dut.sw_pi.value = valor_switches
-        boton_izquierda = random.randint(0, 1)
-        dut.boton_izquierda_pi = boton_izquierda
-        boton_derecha = random.randint(0, 1)
-        dut.boton_derecha_pi = boton_derecha
 
-        if (boton_izquierda == 0) and (boton_derecha == 0):
-            segmento = valor_switches & 0xF
-        elif (boton_izquierda == 0) and (boton_derecha == 1):
-            segmento = (valor_switches >> 4) & 0xF
-        elif (boton_izquierda == 1) and (boton_derecha == 0):
-            segmento = (valor_switches >> 8) & 0xF
-        elif (boton_izquierda == 1) and (boton_derecha == 1):
-            segmento = (valor_switches >> 12) & 0xF
-
+        #Caso 1
+        dut.boton_izquierda_pi.value = 0
+        dut.boton_derecha_pi.value = 0
+        segmento = valor_switches & 0xF
         segmento_binario = f'{segmento:04b}'
         LED = mapeo_7_segmentos(segmento_binario)
+        await Timer(1, 'ps')
+        assert dut.LED_o.value == LED, f"display output LED_o was incorrect. Got {dut.LED_o.value} expected {LED}"
 
-        await Timer(1, 'ns')
+        #Caso 2
+        dut.boton_izquierda_pi.value = 0
+        dut.boton_derecha_pi.value = 1
+        segmento = (valor_switches >> 4) & 0xF
+        segmento_binario = f'{segmento:04b}'
+        LED = mapeo_7_segmentos(segmento_binario)
+        await Timer(1, 'ps')
+        assert dut.LED_o.value == LED, f"display output LED_o was incorrect. Got {dut.LED_o.value} expected {LED}"
+
+        #Caso 3
+        dut.boton_izquierda_pi.value = 1
+        dut.boton_derecha_pi.value = 0
+        segmento = (valor_switches >> 8) & 0xF
+        segmento_binario = f'{segmento:04b}'
+        LED = mapeo_7_segmentos(segmento_binario)
+        await Timer(1, 'ps')
+        assert dut.LED_o.value == LED, f"display output LED_o was incorrect. Got {dut.LED_o.value} expected {LED}"
+
+        #Caso 4
+        dut.boton_izquierda_pi.value = 1
+        dut.boton_derecha_pi.value = 1
+        segmento = (valor_switches >> 12) & 0xF
+        segmento_binario = f'{segmento:04b}'
+        LED = mapeo_7_segmentos(segmento_binario)
+        await Timer(1, 'ps')
         assert dut.LED_o.value == LED, f"display output LED_o was incorrect. Got {dut.LED_o.value} expected {LED}"
 
 

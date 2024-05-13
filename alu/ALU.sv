@@ -13,11 +13,14 @@ module ALU #(
     output logic                     zero_o
     );
     
-    logic [ANCHO:0] carry_suma = ALUa_i + ALUb_i + ALUflagin_i;
-    logic [ANCHO:0] carry_resta = ALUa_i - ALUb_i - ALUflagin_i; 
+    logic [ANCHO:0] carry_suma;
+    logic [ANCHO:0] carry_resta;
     
     logic [ANCHO-1:0] Ai = 0;
     logic [ANCHO-1:0] As = 0;
+
+    assign carry_suma = ALUa_i + ALUb_i + ALUflagin_i;
+    assign carry_resta = ALUa_i - ALUb_i - ALUflagin_i;
     
     always_comb begin
         case(ALUcontrol_i)

@@ -186,88 +186,89 @@ async def test_XOR(dut):
     dut.ALUa_i.value = 0
     dut.ALUb_i.value = 0
     dut.ALUflagin_i.value = 0
-    dut.ALUcontrol_i.value = 0
+    dut.ALUcontrol_i.value = 7
 
-    for run in range (10):
-        dut.ALUcontrol_i.value = 7
-        valor_a = random.randint(0, 15)
+    for valor_a in range (RANGO):
         dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        await Timer(1, 'ns')
-        assert dut.ALUresult_o.value == valor_a ^ valor_b, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {(valor_a ^ valor_b)}"
+        for valor_b in range (RANGO):
+            dut.ALUb_i.value = valor_b
+            await Timer(1, 'ns')
+            assert dut.ALUresult_o.value == valor_a ^ valor_b, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {(valor_a ^ valor_b)}"
 
 @cocotb.test()
 async def test_corrimiento_izquierda_ceros(dut):
-    for run in range (10):
-        dut.ALUcontrol_i.value = 8
-        valor_a = random.randint(0, 15)
-        dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        valor_flag_in = 0
-        dut.ALUflagin_i.value = valor_flag_in
+    dut.ALUa_i.value = 0
+    dut.ALUb_i.value = 0
+    dut.ALUflagin_i.value = 0
+    dut.ALUcontrol_i.value = 8
 
-        resultado = (valor_a << valor_b) & 0xF
-        ultimo_bit = (valor_a >> (valor_b)) & 1
-        await Timer(1, 'ns')
-        assert dut.ALUresult_o.value == resultado
-        #assert dut.ALUflags_o.value == ultimo_bit
-        print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
+    for valor_a in range (RANGO):
+        dut.ALUa_i.value = valor_a
+        for valor_b in range (RANGO):
+            dut.ALUb_i.value = valor_b
+            resultado = (valor_a << valor_b) & 0xF
+            #ultimo_bit = (resultado >> 4) & 1
+            await Timer(1, 'ns')
+            assert dut.ALUresult_o.value == resultado
+            #assert dut.ALUflags_o.value == ultimo_bit
+            #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 @cocotb.test()
 async def test_corrimiento_izquierda_unos(dut):
-    for run in range (10):
-        dut.ALUcontrol_i.value = 8
-        valor_a = random.randint(0, 15)
-        dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        valor_flag_in = 1
-        dut.ALUflagin_i.value = valor_flag_in
+    dut.ALUa_i.value = 0
+    dut.ALUb_i.value = 0
+    dut.ALUflagin_i.value = 1
+    dut.ALUcontrol_i.value = 8
 
-        resultado_esperado = ((valor_a << valor_b) | ((1 << valor_b) - 1)) & 0xF
-        ultimo_bit = (valor_a >> (valor_b)) & 1
-        await Timer(1, 'ns')
-        assert dut.ALUresult_o.value == resultado_esperado
-        #assert dut.ALUflags_o.value == ultimo_bit
-        print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
+    for valor_a in range (RANGO):
+        dut.ALUa_i.value = valor_a
+        for valor_b in range (RANGO):
+            dut.ALUb_i.value = valor_b
+            resultado_esperado = ((valor_a << valor_b) | ((1 << valor_b) - 1)) & 0xF
+            ultimo_bit = (valor_a >> (valor_b)) & 1
+            await Timer(1, 'ns')
+            assert dut.ALUresult_o.value == resultado_esperado
+            #assert dut.ALUflags_o.value == ultimo_bit
+            #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 @cocotb.test()
 async def test_corrimiento_derecha_ceros(dut):
-    for run in range (10):
-        dut.ALUcontrol_i.value = 9
-        valor_a = random.randint(0, 15)
-        dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        valor_flag_in = 0
-        dut.ALUflagin_i.value = valor_flag_in
+    dut.ALUa_i.value = 0
+    dut.ALUb_i.value = 0
+    dut.ALUflagin_i.value = 0
+    dut.ALUcontrol_i.value = 9
 
-        resultado = (valor_a >> valor_b) & 0xF
-        ultimo_bit = (valor_a >> (valor_b)) & 1
-        await Timer(1, 'ns')
-        assert dut.ALUresult_o.value == resultado
-        #assert dut.ALUflags_o.value == ultimo_bit
-        print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
+    for valor_a in range (RANGO):
+        dut.ALUa_i.value = valor_a
+        for valor_b in range (RANGO):
+            dut.ALUb_i.value = valor_b
+            resultado = (valor_a >> valor_b) & 0xF
+            ultimo_bit = (valor_a >> (valor_b)) & 1
+            await Timer(1, 'ns')
+            assert dut.ALUresult_o.value == resultado
+            #assert dut.ALUflags_o.value == ultimo_bit
+            #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 @cocotb.test()
 async def test_corrimiento_derecha_unos(dut):
-    for run in range (100):
-        dut.ALUcontrol_i.value = 9
-        valor_a = random.randint(0, 15)
-        dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        valor_flag_in = 1
-        dut.ALUflagin_i.value = valor_flag_in
+    dut.ALUa_i.value = 0
+    dut.ALUb_i.value = 0
+    dut.ALUflagin_i.value = 1
+    dut.ALUcontrol_i.value = 9
 
-        resultado = (valor_a >> valor_b) & 0xF
-        ultimo_bit = (valor_a >> (valor_b)) & 1
-        await Timer(1, 'ns')
-        #assert dut.ALUresult_o.value == resultado
+    for valor_a in range (RANGO):
+        dut.ALUa_i.value = valor_a
+        aver = -valor_a
+        num_bits = valor_a.bit_length()
+        for valor_b in range (RANGO):
+            dut.ALUb_i.value = valor_b
+            resultado = aver >> valor_b
+            print(resultado)
+            ultimo_bit = (valor_a >> (valor_b)) & 1
+            await Timer(1, 'ns')
+            assert dut.ALUresult_o.value == resultado
         #assert dut.ALUflags_o.value == ultimo_bit
-        print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
+        #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 
 

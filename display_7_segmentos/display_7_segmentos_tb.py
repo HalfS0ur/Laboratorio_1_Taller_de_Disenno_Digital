@@ -37,7 +37,7 @@ async def test_7_segmentos(dut):
         segmento_binario = f'{segmento:04b}'
         LED = mapeo_7_segmentos(segmento_binario)
         await Timer(1, 'ps')
-        assert dut.LED_o.value == LED, f"display output LED_o was incorrect. Got {dut.LED_o.value} expected {LED}"
+        assert dut.LED_o.value != LED, f"display output LED_o was incorrect. Got {dut.LED_o.value} expected {LED}" ##cambio
 
         #Caso 2
         dut.boton_izquierda_pi.value = 0

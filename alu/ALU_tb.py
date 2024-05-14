@@ -35,8 +35,6 @@ async def test_OR(dut):
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == valor_a | valor_b, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {valor_a | valor_b}"
 
-########################### manejar numeros negativos
-
 @cocotb.test()
 async def prueba_suma_sin_carry(dut):
     '''Prueba de la operación suma sin carry in'''
@@ -54,8 +52,6 @@ async def prueba_suma_sin_carry(dut):
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado_suma, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_suma}"
             assert dut.ALUflags_o.value == resultado_carry, f"El valor de la salida ALUflags_o es incorrecto. Se obtuvo {dut.ALUflags_o.value}, se esperaba {resultado_carry}"
-
-########################### manejar numeros negativos
 
 @cocotb.test()
 async def prueba_suma_con_carry(dut):
@@ -140,8 +136,6 @@ async def test_NOT(dut):
         await Timer(1, 'ns')
         assert dut.ALUresult_o.value == resultado_not_b, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_not_b}"
 
-########################### manejar numeros negativos
-
 @cocotb.test()
 async def prueba_resta_sin_carry(dut):
     '''Prueba de la operación resta sin carry in'''
@@ -159,8 +153,6 @@ async def prueba_resta_sin_carry(dut):
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado_resta, f"El valor de la salida ALUresult_o es incorrecto. Se obtuvo {dut.ALUresult_o.value}, se esperaba {resultado_resta}"
             assert dut.ALUflags_o.value == resultado_carry_resta, f"El valor de la salida ALUflags_o es incorrecto. Se obtuvo {dut.ALUflags_o.value}, se esperaba {resultado_carry_resta}"
-
-########################### manejar numeros negativos
 
 @cocotb.test()
 async def prueba_resta_con_carry(dut):
@@ -207,11 +199,9 @@ async def test_corrimiento_izquierda_ceros(dut):
         for valor_b in range (RANGO):
             dut.ALUb_i.value = valor_b
             resultado = (valor_a << valor_b) & 0xF
-            #ultimo_bit = (resultado >> 4) & 1
+            ultimo_bit = (resultado >> 4) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
-            #assert dut.ALUflags_o.value == ultimo_bit
-            #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 @cocotb.test()
 async def test_corrimiento_izquierda_unos(dut):
@@ -228,8 +218,6 @@ async def test_corrimiento_izquierda_unos(dut):
             ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado_esperado
-            #assert dut.ALUflags_o.value == ultimo_bit
-            #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 @cocotb.test()
 async def test_corrimiento_derecha_ceros(dut):
@@ -246,8 +234,6 @@ async def test_corrimiento_derecha_ceros(dut):
             ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
-            #assert dut.ALUflags_o.value == ultimo_bit
-            #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
 
 @cocotb.test()
 async def test_corrimiento_derecha_unos(dut):
@@ -267,83 +253,3 @@ async def test_corrimiento_derecha_unos(dut):
             ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
-        #assert dut.ALUflags_o.value == ultimo_bit
-        #print(dut.ALUflags_o.value, ultimo_bit) ##Revisar valores de x
-
-
-
-
-
-'''@cocotb.test()
-async def test_corrimiento_izquierda(dut):
-    for run in range (10):
-        dut.ALUcontrol_i.value = 8
-        valor_a = random.randint(0, 15)
-        dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        valor_flag_in = random.randint(0, 1)
-        dut.ALUflagin_i.value = valor_flag_in
-
-        if (valor_b <= 4):
-            valor_flag_out = ((valor_a) >> (4 - valor_b)) & 0b1
-            await Timer(2, 'ns')
-            assert dut.ALUflags_o.value == valor_flag_out, f"ALU output ALUflags_o was incorrect. Got {dut.ALUflags_o.value}, expected {(valor_flag_out)}"
-        
-        elif (valor_b > 4):
-            valor_flag_out = valor_flag_in
-            await Timer(2, 'ns')
-            assert dut.ALUflags_o.value == valor_flag_out, f"Mux output ALUflags_o was incorrect. Got {dut.ALUflags_o.value}, expected {(valor_flag_out)}"
-        
-        if valor_flag_in == 0:
-            resultado = (valor_a << valor_b) & 0xF
-            await Timer(2, 'ns')
-            assert dut.ALUresult_o.value == resultado, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {(resultado)}"
-
-        elif valor_flag_in == 1:
-            resultado = ((valor_a << valor_b) | ((1 << valor_b) - 1))
-            resultado &= 0b1111
-            await Timer(3, 'ns')
-            assert dut.ALUresult_o.value == resultado, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {resultado}"
-
-
-
-
-
-
-
-
-
-
-
-@cocotb.test()
-async def test_corrimiento_derecha(dut):
-    for run in range (10):
-        dut.ALUcontrol_i.value = 9
-        valor_a = random.randint(0, 15)
-        dut.ALUa_i.value = valor_a
-        valor_b = random.randint(0, 15)
-        dut.ALUb_i.value = valor_b
-        valor_flag_in = random.randint(0, 1)
-        dut.ALUflagin_i.value = valor_flag_in
-
-        if (valor_b <= 4):
-            valor_flag_out = ((valor_a) >> (valor_b - 1)) & 0b1
-            await Timer(2, 'ns')
-            assert dut.ALUflags_o.value == valor_flag_out, f"ALU output ALUflags_o was incorrect. Got {dut.ALUflags_o.value}, expected {valor_flag_out}"
-        
-        elif (valor_b >> 4):
-            valor_flag_out = valor_flag_in
-            await Timer(2, 'ns')
-            assert dut.ALUflags_o.value == valor_flag_out, f"ALU output ALUflags_o was incorrect. Got {dut.ALUflags_o.value}, expected {valor_flag_out}"
-        
-        if valor_flag_in == 0:
-            resultado = (valor_a >> valor_b) & 0xF
-            await Timer(2, 'ns')
-            assert dut.ALUresult_o.value == resultado, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {resultado}"
-
-        elif valor_flag_in == 1:
-            resultado = ((valor_a >> valor_b) | ((1 >> valor_b) - 1))
-            resultado &= 0b1111
-            await Timer(3, 'ns')
-            assert dut.ALUresult_o.value == resultado, f"ALU output ALUresult_o was incorrect. Got {dut.ALUresult_o.value}, expected {resultado}"'''

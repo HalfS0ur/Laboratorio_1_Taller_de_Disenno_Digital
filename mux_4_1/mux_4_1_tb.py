@@ -3,47 +3,35 @@ import cocotb
 from cocotb.triggers import Timer
 
 @cocotb.test()
-async def test_mux_dumb(dut):
-    """Test del multiplexor 4 a 1 hecho incorrectamente"""
-    entrada_0 = random.randint(00, 255)
-    entrada_1 = random.randint(0, 255)
-    entrada_2 = random.randint(0, 255)
-    entrada_3 = random.randint(0, 255)
-
-    dut.entrada0_i.value = entrada_0
-    dut.entrada1_i.value = entrada_1
-    dut.entrada2_i.value = entrada_2
-    dut.entrada3_i.value = entrada_3
-
-    dut.seleccion_i.value = 0b00
-    await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_0, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_0}"
-
-    dut.seleccion_i.value = 0b01
-    await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_1, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_1}"
-
-    dut.seleccion_i.value = 0b10
-    await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_2, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_2}"
-
-    dut.seleccion_i.value = 0b11
-    await Timer(1, 'ns')
-    assert dut.salida_o.value == entrada_3, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {entrada_3}"
+async def prueba_mux(dut):
+    """Prueba de todas las combinaciones del multiplexor 4 a 1 de 8 bits"""
+    dut.entrada0_i.value = 0
+    dut.entrada1_i.value = 0
+    dut.entrada2_i.value = 0
+    dut.entrada3_i.value = 0
+    dut.seleccion_i.value = 0
+    
+    for prueba in range (2**8):
+        for i in range (4):
+            dut.__getattr__(f"entrada{i}_i").value = prueba
+        for sel in range (4):
+            dut.seleccion_i.value = sel
+            await Timer(1, 'ns')
+            assert dut.salida_o.value == prueba, f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {prueba}"
 
 @cocotb.test()
 async def test_mux_proper(dut):
-    """Test del multiplexor 4 a 1 hecho más mejor (testbench autoverificable)"""
+    """Prueba del multiplexor 4 a 1 con valores aleatorios en las entradas"""
     #Inicializar variables.
-    dut.entrada0_i.value = 0b0
-    dut.entrada1_i.value = 0b0
-    dut.entrada2_i.value = 0b0
-    dut.entrada3_i.value = 0b0
-    dut.seleccion_i.value = 0b0
+    dut.entrada0_i.value = 0
+    dut.entrada1_i.value = 0
+    dut.entrada2_i.value = 0
+    dut.entrada3_i.value = 0
+    dut.seleccion_i.value = 0
 
     valores_entrada = []
 
-    for n in range (10):
+    for n in range (4096):
         #Carga valores en las entradas del mux
         for i in range (4):
             valorentrada = random.randint(0,255)
@@ -56,3 +44,4 @@ async def test_mux_proper(dut):
             assert dut.salida_o.value == valores_entrada[sel], f"Mux output salida_o was incorrect. Got {dut.salida_o.value} expected {valores_entrada[sel]}"
         #Reinicia la lista de valores usados en las entradas
         valores_entrada = []
+

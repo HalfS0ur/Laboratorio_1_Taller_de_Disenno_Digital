@@ -3,6 +3,7 @@ import random
 from cocotb.triggers import Timer
 
 RANGO = 2**4
+valores_b = [0, 8, 12, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
 
 @cocotb.test()
 async def test_AND(dut):
@@ -242,14 +243,16 @@ async def test_corrimiento_derecha_unos(dut):
     dut.ALUflagin_i.value = 1
     dut.ALUcontrol_i.value = 9
 
+    c = 0
+
     for valor_a in range (RANGO):
         dut.ALUa_i.value = valor_a
-        aver = -valor_a
-        num_bits = valor_a.bit_length()
+        c = 0
         for valor_b in range (RANGO):
             dut.ALUb_i.value = valor_b
-            resultado = aver >> valor_b
-            print(resultado)
+            resultado = ((valor_a >> valor_b) | valores_b[c]) & 0xF
             ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
+            if c <= 13:
+                c = c + 1

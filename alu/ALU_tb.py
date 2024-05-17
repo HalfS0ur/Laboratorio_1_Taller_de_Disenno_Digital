@@ -200,7 +200,6 @@ async def test_corrimiento_izquierda_ceros(dut):
         for valor_b in range (RANGO):
             dut.ALUb_i.value = valor_b
             resultado = (valor_a << valor_b) & 0xF
-            ultimo_bit = (resultado >> 4) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
 
@@ -216,7 +215,6 @@ async def test_corrimiento_izquierda_unos(dut):
         for valor_b in range (RANGO):
             dut.ALUb_i.value = valor_b
             resultado_esperado = ((valor_a << valor_b) | ((1 << valor_b) - 1)) & 0xF
-            ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado_esperado
 
@@ -232,7 +230,6 @@ async def test_corrimiento_derecha_ceros(dut):
         for valor_b in range (RANGO):
             dut.ALUb_i.value = valor_b
             resultado = (valor_a >> valor_b) & 0xF
-            ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
 
@@ -251,7 +248,6 @@ async def test_corrimiento_derecha_unos(dut):
         for valor_b in range (RANGO):
             dut.ALUb_i.value = valor_b
             resultado = ((valor_a >> valor_b) | valores_b[c]) & 0xF
-            ultimo_bit = (valor_a >> (valor_b)) & 1
             await Timer(1, 'ns')
             assert dut.ALUresult_o.value == resultado
             if c <= 13:

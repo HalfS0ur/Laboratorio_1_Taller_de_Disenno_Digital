@@ -2,21 +2,38 @@ import cocotb
 import random
 from cocotb.triggers import Timer
 
-@cocotb.test()
-async def test_CLA(dut):
-    """Prueba del módulo carry look ahead"""
-    for run in range(256):
-        entrada_a = random.randint(0, 255)
-        dut.a.value = entrada_a
-        entrada_b = random.randint(0, 255)
-        dut.b.value = entrada_b
-        entrada_carry = random.randint(0, 1)
-        dut.c_in.value = entrada_carry
-        
-        resultado_esperado = (entrada_a + entrada_b + entrada_carry) & 0xFF
-        logica_carry = 1 if entrada_a + entrada_b + entrada_carry > 256 else 0
-        
-        await Timer(2, 'ns') 
+PRUEBAS = 2**8
 
-        assert dut.sum.value == resultado_esperado, f"Sum output was incorrect. Got {dut.sum.value}, expected {resultado_esperado}"
-        assert dut.c_out.value == logica_carry, f"Carry out output was incorrect. Got {dut.c_out.value}, expected {logica_carry}"
+@cocotb.test()
+async def prueba_CLA_sin_carry_in(dut):
+    dut.c_in.value = 0
+
+    for valor_a in range(PRUEBAS):
+        dut.a.value = valor_a
+        for valor_b in range(PRUEBAS):
+            dut.b.value = valor_b
+
+            resultado = (valor_a + valor_b) & 0xFF
+            carry_out = ((valor_a + valor_b) >> 8) & 1
+
+            await Timer(1, 'ns')
+
+            assert dut.sum.value == resultado, f"Resultado de la suma incorrecto. Se obtuvo {dut.sum.value}, esperaba {resultado}"
+            assert dut.c_out.value == carry_out, f"Resultado del carry out. Se obtuvo {dut.c_out.value}, esperaba {carry_out}"
+
+@cocotb.test()
+async def prueba_CLA_con_carry_in(dut):
+    dut.c_in.value = 1
+
+    for valor_a in range(PRUEBAS):
+        dut.a.value = valor_a
+        for valor_b in range(PRUEBAS):
+            dut.b.value = valor_b
+
+            resultado = (valor_a + valor_b + 1) & 0xFF
+            carry_out = ((valor_a + valor_b + 1) >> 8) & 1
+
+            await Timer(1, 'ns')
+
+            assert dut.sum.value == resultado, f"Resultado de la suma incorrecto. Se obtuvo {dut.sum.value}, esperaba {resultado}"
+            assert dut.c_out.value == carry_out, f"Resultado del carry out. Se obtuvo {dut.c_out.value}, esperaba {carry_out}"

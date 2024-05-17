@@ -8,13 +8,13 @@ module CLA (
   output logic c_out
 );
 
-  logic [8:0] G;    //generador de acarreo
-  logic [8:0] P;    //propagador de acarreo
+  logic [8:0] G = a & b;    //generador de acarreo
+  logic [8:0] P = a ^ b;    //propagador de acarreo
   logic [9:0] C;    //acarreos generados
 
   always_comb begin
-    G = a & b;
-    P = a ^ b;
+    //G = a & b;
+    //P = a ^ b;
     C[0] = c_in;
 
     for (int i = 0; i < 8; i++) begin   //generar etapas de cálculo de anticipación de acarreo

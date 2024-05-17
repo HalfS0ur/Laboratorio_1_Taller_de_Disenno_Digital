@@ -24,17 +24,17 @@ jobs:
           mux:
             - 'mux_4_1/**/*.sv'
           alu:
-            - 'alu/**'
+            - 'alu/**/*.sv'
           display:
-            - 'display_7_segmentos/**'
+            - 'display_7_segmentos/**/*.sv'
           sw_led:
-            - 'switches_leds/**'
+            - 'switches_leds/**/*.sv'
           cla:
-            - 'sumadores/CLA/**'
+            - 'sumadores/CLA/**/*.sv'
           fa:
-            - 'sumadores/FA/**'
+            - 'sumadores/FA/**/*.sv'
           rca:
-            - 'sumadores/RCA/**'
+            - 'sumadores/RCA/**/*.sv'
 
   mux:
     needs: changes
@@ -54,7 +54,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -93,7 +92,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -132,7 +130,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -171,7 +168,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -210,7 +206,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -249,7 +244,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -258,7 +252,7 @@ jobs:
             import xml.etree.ElementTree as ET
             import sys
             try:
-              tree = ET.parse("/sumadores/FA/results.xml")
+              tree = ET.parse("sumadores/FA/results.xml")
               root = tree.getroot()
               if "Test failed" in ET.tostring(root).decode():
                 print(f"Se encontraron errores durante la ejecución del testbench.")
@@ -288,7 +282,6 @@ jobs:
           python-version: '3.10'
       - name: Installing dependencies
         run: pip install cocotb==1.8.1
-      - run: cocotb-config --version
       - run: make
       - name: Checking for errors
         uses: jannekem/run-python-script-action@v1.7
@@ -297,7 +290,7 @@ jobs:
             import xml.etree.ElementTree as ET
             import sys
             try:
-              tree = ET.parse("/sumadores/RCA/results.xml")
+              tree = ET.parse("sumadores/RCA/results.xml")
               root = tree.getroot()
               if "Test failed" in ET.tostring(root).decode():
                 print(f"Se encontraron errores durante la ejecución del testbench.")

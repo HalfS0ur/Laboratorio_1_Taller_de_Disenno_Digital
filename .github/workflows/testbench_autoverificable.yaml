@@ -10,6 +10,9 @@ jobs:
       display: ${{ steps.filter.outputs.display }}
       sw_led : ${{ steps.filter.outputs.sw_led }}
       cla : ${{ steps.filter.outputs.cla }}
+      fa : ${{ steps.filter.outputs.fa }}
+      rca : ${{ steps.filter.outputs.rca }}
+
     steps:
     - name: checking out repository code
       uses: actions/checkout@v4
@@ -28,6 +31,10 @@ jobs:
             - 'switches_leds/**'
           cla:
             - 'sumadores/CLA/**'
+          fa:
+            - 'sumadores/FA/**'
+          rca:
+            - 'sumadores/RCA/**'
 
   mux:
     needs: changes
@@ -46,9 +53,27 @@ jobs:
         with: 
           python-version: '3.10'
       - name: Installing dependencies
-        run: pip install cocotb
+        run: pip install cocotb==1.8.1
       - run: cocotb-config --version
       - run: make
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse("mux_4_1/results.xml")
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+                print(f"Se encontraron errores durante la ejecución del testbench.")
+                sys.exit(1)
+              else:
+                print(f"Ejecución del testbench exitosa.")
+                sys.exit(0)
+            except Exception as e:
+              print("An error occurred:", e)
+              sys.exit(1)
 
   alu:
     needs: changes
@@ -67,7 +92,7 @@ jobs:
         with: 
           python-version: '3.10'
       - name: Installing dependencies
-        run: pip install cocotb
+        run: pip install cocotb==1.8.1
       - run: cocotb-config --version
       - run: make
       - name: Checking for errors
@@ -106,7 +131,7 @@ jobs:
         with: 
           python-version: '3.10'
       - name: Installing dependencies
-        run: pip install cocotb
+        run: pip install cocotb==1.8.1
       - run: cocotb-config --version
       - run: make
       - name: Checking for errors
@@ -145,9 +170,27 @@ jobs:
         with: 
           python-version: '3.10'
       - name: Installing dependencies
-        run: pip install cocotb
+        run: pip install cocotb==1.8.1
       - run: cocotb-config --version
       - run: make
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse("switches_leds/results.xml")
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+                print(f"Se encontraron errores durante la ejecución del testbench.")
+                sys.exit(1)
+              else:
+                print(f"Ejecución del testbench exitosa.")
+                sys.exit(0)
+            except Exception as e:
+              print("An error occurred:", e)
+              sys.exit(1)
 
   cla:
     needs: changes
@@ -166,6 +209,102 @@ jobs:
         with: 
           python-version: '3.10'
       - name: Installing dependencies
-        run: pip install cocotb
+        run: pip install cocotb==1.8.1
       - run: cocotb-config --version
       - run: make
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse("sumadores/CLA/results.xml")
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+                print(f"Se encontraron errores durante la ejecución del testbench.")
+                sys.exit(1)
+              else:
+                print(f"Ejecución del testbench exitosa.")
+                sys.exit(0)
+            except Exception as e:
+              print("An error occurred:", e)
+              sys.exit(1)
+
+  fa:
+    needs: changes
+    if: ${{ needs.changes.outputs.fa == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./sumadores/FA
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb==1.8.1
+      - run: cocotb-config --version
+      - run: make
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse("/sumadores/FA/results.xml")
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+                print(f"Se encontraron errores durante la ejecución del testbench.")
+                sys.exit(1)
+              else:
+                print(f"Ejecución del testbench exitosa.")
+                sys.exit(0)
+            except Exception as e:
+              print("An error occurred:", e)
+              sys.exit(1)
+
+  rca:
+    needs: changes
+    if: ${{ needs.changes.outputs.rca == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./sumadores/RCA
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb==1.8.1
+      - run: cocotb-config --version
+      - run: make
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse("/sumadores/RCA/results.xml")
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+                print(f"Se encontraron errores durante la ejecución del testbench.")
+                sys.exit(1)
+              else:
+                print(f"Ejecución del testbench exitosa.")
+                sys.exit(0)
+            except Exception as e:
+              print("An error occurred:", e)
+              sys.exit(1)

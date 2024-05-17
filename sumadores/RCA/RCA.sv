@@ -10,7 +10,7 @@ module RCA #(
   output logic            cout
 );
 
-logic [BITS:0] carry; // Increase the size by 1
+logic [BITS:0] carry;
 assign carry[0] = cin;
 
 generate

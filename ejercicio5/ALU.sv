@@ -25,7 +25,7 @@ module ALU #(
     always_comb begin
         case(ALUcontrol_i)
             4'h0: begin
-                    ALUresult_o = ALUa_i & ALUb_i; //and
+                    ALUresult_o = ALUa_i & ALUb_i; //and.
                     ALUflags_o = 0;
                   end
                   

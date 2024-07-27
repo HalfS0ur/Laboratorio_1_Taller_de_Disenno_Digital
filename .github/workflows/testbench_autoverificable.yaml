@@ -11,7 +11,7 @@ jobs:
       ejercicio4_full_adder : ${{ steps.filter.outputs.ejercicio4_full_adder }}
       ejercicio4_ripple_carry_adder : ${{ steps.filter.outputs.ejercicio4_ripple_carry_adder }}
       ejercicio4_carry_lookahead_adder : ${{ steps.filter.outputs.ejercicio4_carry_lookahead_adder }}
-      alu: ${{ steps.filter.outputs.alu }}
+      ejercicio5: ${{ steps.filter.outputs.ejercicio5 }}
 
     steps:
     - name: checking out repository code
@@ -33,8 +33,8 @@ jobs:
             - 'ejercicio4/rca/**/*.sv'
           ejercicio4_carry_lookahead_adder:
             - 'ejercicio4/cla/**/*.sv'
-          alu:
-            - 'alu/**/*.sv'
+          ejercicio5:
+            - 'ejercicio5/**/*.sv'
 
 
   ejercicio1:
@@ -268,13 +268,13 @@ jobs:
               sys.exit(1)
 
 
-  alu:
+  ejercicio5:
     needs: changes
-    if: ${{ needs.changes.outputs.alu == 'true' }}
+    if: ${{ needs.changes.outputs.ejercicio5 == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./alu
+        working-directory: ./ejercicio5/testing
     steps:
       - name: Checking out repository code
         uses: actions/checkout@v4
@@ -294,7 +294,7 @@ jobs:
             import xml.etree.ElementTree as ET
             import sys
             try:
-              tree = ET.parse("alu/results.xml")
+              tree = ET.parse("ejercicio5/testing/results.xml")
               root = tree.getroot()
               if "Test failed" in ET.tostring(root).decode():
                 print(f"Se encontraron errores durante la ejecución del testbench.")

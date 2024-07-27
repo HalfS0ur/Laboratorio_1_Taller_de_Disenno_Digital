@@ -45,18 +45,18 @@ jobs:
       run:
         working-directory: ./ejercicio1/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest 
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |
@@ -83,18 +83,18 @@ jobs:
       run:
         working-directory: ./ejercicio2/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |
@@ -121,18 +121,18 @@ jobs:
       run:
         working-directory: ./ejercicio3/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |
@@ -159,18 +159,18 @@ jobs:
       run:
         working-directory: ./ejercicio4/fa/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |
@@ -198,18 +198,18 @@ jobs:
       run:
         working-directory: ./ejercicio4/rca/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |
@@ -237,18 +237,18 @@ jobs:
       run:
         working-directory: ./ejercicio4/cla/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |
@@ -276,18 +276,18 @@ jobs:
       run:
         working-directory: ./ejercicio5/testing
     steps:
-      - name: Checking out repository code
+      - name: Descargando el código del repositorio
         uses: actions/checkout@v4
-      - name: Installing iverilog
+      - name: Instalando iverilog
         run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
+      - name: Configurando Python
         uses: actions/setup-python@v5
         with: 
           python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
+      - name: Instalando dependencias
+        run: pip install cocotb==1.8.1 pytest
       - run: make
-      - name: Checking for errors
+      - name: Analizando resultados
         uses: jannekem/run-python-script-action@v1.7
         with:
           script: |

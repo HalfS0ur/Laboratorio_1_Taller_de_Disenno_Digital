@@ -8,10 +8,10 @@ jobs:
       ejercicio1 : ${{ steps.filter.outputs.ejercicio1 }}
       ejercicio2: ${{ steps.filter.outputs.ejercicio2 }}
       ejercicio3: ${{ steps.filter.outputs.ejercicio3 }}
-      alu: ${{ steps.filter.outputs.alu }}
+      ejercicio4_full_adder : ${{ steps.filter.outputs.ejercicio4_full_adder }}
       cla : ${{ steps.filter.outputs.cla }}
-      fa : ${{ steps.filter.outputs.fa }}
       rca : ${{ steps.filter.outputs.rca }}
+      alu: ${{ steps.filter.outputs.alu }}
 
     steps:
     - name: checking out repository code
@@ -27,14 +27,14 @@ jobs:
             - 'ejercicio2/**/*.sv'
           ejercicio3:
             - 'ejercicio3/**/*.sv'
-          alu:
-            - 'alu/**/*.sv'
+          ejercicio4_full_adder:
+            - 'ejercicio4/fa/**/*.sv'
           cla:
             - 'sumadores/CLA/**/*.sv'
-          fa:
-            - 'sumadores/FA/**/*.sv'
           rca:
             - 'sumadores/RCA/**/*.sv'
+          alu:
+            - 'alu/**/*.sv'
 
 
   ejercicio1:
@@ -151,6 +151,45 @@ jobs:
               print("An error occurred:", e)
               sys.exit(1)
 
+  ejercicio4_full_adder:
+    needs: changes
+    if: ${{ needs.changes.outputs.ejercicio4_full_adder == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ejercicio4/fa/testing
+    steps:
+      - name: Checking out repository code
+        uses: actions/checkout@v4
+      - name: Installing iverilog
+        run: sudo apt-get install iverilog
+      - name: Setting up Python 3.10
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.10'
+      - name: Installing dependencies
+        run: pip install cocotb==1.8.1
+      - run: make
+      - name: Checking for errors
+        uses: jannekem/run-python-script-action@v1.7
+        with:
+          script: |
+            import xml.etree.ElementTree as ET
+            import sys
+            try:
+              tree = ET.parse("ejercicio4/fa/testing/results.xml")
+              root = tree.getroot()
+              if "Test failed" in ET.tostring(root).decode():
+                print(f"Se encontraron errores durante la ejecución del testbench.")
+                sys.exit(1)
+              else:
+                print(f"Ejecución del testbench exitosa.")
+                sys.exit(0)
+            except Exception as e:
+              print("An error occurred:", e)
+              sys.exit(1)
+
+
   alu:
     needs: changes
     if: ${{ needs.changes.outputs.alu == 'true' }}
@@ -231,43 +270,7 @@ jobs:
               print("An error occurred:", e)
               sys.exit(1)
 
-  fa:
-    needs: changes
-    if: ${{ needs.changes.outputs.fa == 'true' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./sumadores/FA
-    steps:
-      - name: Checking out repository code
-        uses: actions/checkout@v4
-      - name: Installing iverilog
-        run: sudo apt-get install iverilog
-      - name: Setting up Python 3.10
-        uses: actions/setup-python@v5
-        with: 
-          python-version: '3.10'
-      - name: Installing dependencies
-        run: pip install cocotb==1.8.1
-      - run: make
-      - name: Checking for errors
-        uses: jannekem/run-python-script-action@v1.7
-        with:
-          script: |
-            import xml.etree.ElementTree as ET
-            import sys
-            try:
-              tree = ET.parse("sumadores/FA/results.xml")
-              root = tree.getroot()
-              if "Test failed" in ET.tostring(root).decode():
-                print(f"Se encontraron errores durante la ejecución del testbench.")
-                sys.exit(1)
-              else:
-                print(f"Ejecución del testbench exitosa.")
-                sys.exit(0)
-            except Exception as e:
-              print("An error occurred:", e)
-              sys.exit(1)
+
 
   rca:
     needs: changes

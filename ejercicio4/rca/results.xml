@@ -1,0 +1,7 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1715914411" />
+    <testcase name="prueba_RCA_sin_carry_in" classname="RCA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/RCA/RCA_tb.py" lineno="7" time="4.468658685684204" sim_time_ns="65536.001" ratio_time="14665.698503658637" />
+    <testcase name="prueba_RCA_con_carry_in" classname="RCA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/RCA/RCA_tb.py" lineno="24" time="4.509143590927124" sim_time_ns="65536.001" ratio_time="14534.023962303041" />
+  </testsuite>
+</testsuites>

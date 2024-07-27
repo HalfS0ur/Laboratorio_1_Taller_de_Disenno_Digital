@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1715913712" />
+    <testcase name="prueba_full_adder_sin_cin" classname="full_adder_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/FA/full_adder_tb.py" lineno="5" time="0.0011968612670898438" sim_time_ns="4.001" ratio_time="3342.9104191235065" />
+    <testcase name="prueba_full_adder_con_cin" classname="full_adder_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/FA/full_adder_tb.py" lineno="22" time="0.0006818771362304688" sim_time_ns="4.001" ratio_time="5867.625980419581" />
+    <testcase name="test_full_adder_valores_aleatorios" classname="full_adder_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/FA/full_adder_tb.py" lineno="39" time="0.0016281604766845703" sim_time_ns="16.000999999999998" ratio_time="9827.655338116852" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,7 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1715913211" />
+    <testcase name="prueba_CLA_sin_carry_in" classname="CLA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/CLA/CLA_tb.py" lineno="7" time="5.66743016242981" sim_time_ns="65536.001" ratio_time="11563.618628147791" />
+    <testcase name="prueba_CLA_con_carry_in" classname="CLA_tb" file="/home/kendall/Documents/Actions/test_actions/sumadores/CLA/CLA_tb.py" lineno="24" time="5.572495460510254" sim_time_ns="65536.001" ratio_time="11760.61989900645" />
+  </testsuite>
+</testsuites>

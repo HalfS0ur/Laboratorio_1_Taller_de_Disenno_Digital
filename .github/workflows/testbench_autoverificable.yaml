@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       ejercicio1 : ${{ steps.filter.outputs.ejercicio1 }}
-      mux: ${{ steps.filter.outputs.mux }}
+      ejercicio2: ${{ steps.filter.outputs.ejercicio2 }}
       alu: ${{ steps.filter.outputs.alu }}
       display: ${{ steps.filter.outputs.display }}
       cla : ${{ steps.filter.outputs.cla }}
@@ -23,8 +23,8 @@ jobs:
         filters: |
           ejercicio1:
             - 'ejercicio1/**/*.sv'
-          mux:
-            - 'mux_4_1/**/*.sv'
+          ejercicio2:
+            - 'ejercicio2/**/*.sv'
           alu:
             - 'alu/**/*.sv'
           display:
@@ -75,13 +75,13 @@ jobs:
               print("An error occurred:", e)
               sys.exit(1)
 
-  mux:
+  ejercicio2:
     needs: changes
-    if: ${{ needs.changes.outputs.mux == 'true' }}
+    if: ${{ needs.changes.outputs.ejercicio2 == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./mux_4_1
+        working-directory: ./ejercicio2/testing
     steps:
       - name: Checking out repository code
         uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
             import xml.etree.ElementTree as ET
             import sys
             try:
-              tree = ET.parse("mux_4_1/results.xml")
+              tree = ET.parse("ejercicio2/testing/results.xml")
               root = tree.getroot()
               if "Test failed" in ET.tostring(root).decode():
                 print(f"Se encontraron errores durante la ejecución del testbench.")

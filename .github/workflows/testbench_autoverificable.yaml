@@ -1,8 +1,8 @@
-name: Prueba verificacion de archivos
-run-name: ${{ github.actor }} is checking the files
+name: Testbench autoverificable
+run-name: ${{ github.actor }} está corriendo un testbench
 on: [push]
 jobs: 
-  changes:
+  Verificando_cambios:
     runs-on: ubuntu-latest
     outputs:
       ejercicio1 : ${{ steps.filter.outputs.ejercicio1 }}
@@ -14,9 +14,9 @@ jobs:
       ejercicio5: ${{ steps.filter.outputs.ejercicio5 }}
 
     steps:
-    - name: checking out repository code
+    - name: Descargando el código del repositorio
       uses: actions/checkout@v4
-    - name: checking for changes
+    - name: Verificando cambios
       uses: dorny/paths-filter@v3
       id: filter
       with:
@@ -38,8 +38,8 @@ jobs:
 
 
   ejercicio1:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio1 == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio1 == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -76,8 +76,8 @@ jobs:
               sys.exit(1)
 
   ejercicio2:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio2 == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio2 == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -114,8 +114,8 @@ jobs:
               sys.exit(1)
 
   ejercicio3:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio3 == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio3 == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -152,8 +152,8 @@ jobs:
               sys.exit(1)
 
   ejercicio4_full_adder:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio4_full_adder == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio4_full_adder == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -191,8 +191,8 @@ jobs:
 
 
   ejercicio4_ripple_carry_adder:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio4_ripple_carry_adder == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio4_ripple_carry_adder == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -230,8 +230,8 @@ jobs:
 
 
   ejercicio4_carry_lookahead_adder:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio4_carry_lookahead_adder == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio4_carry_lookahead_adder == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -269,8 +269,8 @@ jobs:
 
 
   ejercicio5:
-    needs: changes
-    if: ${{ needs.changes.outputs.ejercicio5 == 'true' }}
+    needs: Verificando_cambios
+    if: ${{ needs.Verificando_cambios.outputs.ejercicio5 == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:

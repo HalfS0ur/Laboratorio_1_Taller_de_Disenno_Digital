@@ -1,7 +1,3 @@
-*/results.xml
-*/__pycache__/
-*/sim_build/
-
-sumadores/**/__pycache__/
-sumadores/**/results.xml
-sumadores/**/sim_build/
+**/**/__pycache__/
+**/**/results.xml
+**/**/sim_build/

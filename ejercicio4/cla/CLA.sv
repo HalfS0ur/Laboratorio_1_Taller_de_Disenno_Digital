@@ -17,7 +17,7 @@ module CLA (
     P = a ^ b;
     C[0] = c_in;
 
-    for (int i = 0; i < 8; i++) begin   //generar etapas de cálculo de anticipación de acarreo.
+    for (int i = 0; i < 8; i++) begin   //generar etapas de cálculo de anticipación de acarreo..
       C[i+1] = G[i] | (P[i] & C[i]);
       sum[i] = P[i] ^ C[i];
     end

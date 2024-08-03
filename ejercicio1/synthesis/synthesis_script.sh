@@ -62,12 +62,12 @@ echo '::endgroup::'
 
 echo '::group::Sintetizando Módulo(s)'
 
-MAKEFILE_PATH="ejercicio1/synthesis"
+#MAKEFILE_PATH="ejercicio1/synthesis"
 
 source "${F4PGA_INSTALL_DIR}/${FPGA_FAM}/conda/etc/profile.d/conda.sh"
 conda activate $FPGA_FAM
 cd ..
-cd $MAKEFILE_PATH
+#cd $MAKEFILE_PATH
 make
 
 echo '::endgroup::'

@@ -340,6 +340,18 @@ jobs:
               print("An error occurred:", e)
               sys.exit(1)
 
+  sintesis_ejercicio5:
+    needs: ejercicio5
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ejercicio5/synthesis
+    steps:
+      - name: Descargando el código del repositorio
+        uses: actions/checkout@v4
+      - name: Sintetizando módulo(s)
+        run: bash synthesis_script.sh
+
 
 
 

@@ -50,7 +50,7 @@ module ALU #(
                         ALUResult = ALUB + 1;
                   end
                   
-            4'h4: begin //decremento en 1
+            4'h4: begin //decremento en 1.
                     ALUFlags = 0;
                     if (ALUFlagIn == 0)
                         ALUResult = ALUA - 1;

@@ -34,7 +34,7 @@ module display_7_segmentos(
             4'b1101: LED_o = 7'b0100001; // D
             4'b1110: LED_o = 7'b0000110; // E
             4'b1111: LED_o = 7'b0001110; // F
-            default: LED_o = 7'b1111111; // Valor inválido
+            default: LED_o = 7'b1111111; // Valor inválido.
         endcase
         
     end

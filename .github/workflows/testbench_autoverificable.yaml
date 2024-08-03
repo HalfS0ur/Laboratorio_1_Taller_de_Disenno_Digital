@@ -87,7 +87,7 @@ jobs:
       - name: Descargando el código del repositorio
         uses: actions/checkout@v4
       - name: Sintetizando módulo(s)
-        run: bash synthesis_script.sh
+        run: bash ../../.github/scripts/synthesis_script.sh
 
 
         
@@ -180,7 +180,7 @@ jobs:
       - name: Descargando el código del repositorio
         uses: actions/checkout@v4
       - name: Sintetizando módulo(s)
-        run: bash synthesis_script.sh
+        run: bash ../../.github/scripts/synthesis_script.sh
 
 
         
@@ -350,7 +350,7 @@ jobs:
       - name: Descargando el código del repositorio
         uses: actions/checkout@v4
       - name: Sintetizando módulo(s)
-        run: bash synthesis_script.sh
+        run: bash ../../.github/scripts/synthesis_script.sh
 
 
 

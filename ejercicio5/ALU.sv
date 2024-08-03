@@ -23,6 +23,9 @@ module ALU #(
     assign carry_resta = ALUA - ALUB - ALUFlagIn;
     
     always_comb begin
+        Ai = 0;
+        As = 0;
+        
         case(ALUControl)
             4'h0: begin
                     ALUResult = ALUA & ALUB; //and

@@ -130,6 +130,23 @@ jobs:
               print("An error occurred:", e)
               sys.exit(1)
 
+
+  sintesis_ejercicio2:
+    needs: ejercicio2
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ejercicio2/synthesis
+    steps:
+      - name: Descargando el código del repositorio
+        uses: actions/checkout@v4
+      - name: Sintetizando módulo(s)
+        run: bash ../../.github/scripts/synthesis_script.sh -a
+
+
+
+
+
   ejercicio3:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio3 == 'true' }}

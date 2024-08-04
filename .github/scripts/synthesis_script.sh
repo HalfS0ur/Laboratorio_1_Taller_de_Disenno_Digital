@@ -65,6 +65,31 @@ echo '::group::Sintetizando Módulo(s)'
 source "${F4PGA_INSTALL_DIR}/${FPGA_FAM}/conda/etc/profile.d/conda.sh"
 conda activate $FPGA_FAM
 cd ..
-make
+
+flag_in=false
+
+while getopts "abc" opt; do
+  flag_in=true
+  case $opt in
+    a)
+      cd ..
+      symbiflow_synth -t mux_4_1 -v mux_4_1.sv -d artix7 -p xc7a35tcpg236-1
+      ;;
+    b)
+      echo "Running command B"
+      ;;
+    c)
+      echo "Running command C"
+      ;;
+    *)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+if ! $flag_in; then
+  make
+fi
 
 echo '::endgroup::'

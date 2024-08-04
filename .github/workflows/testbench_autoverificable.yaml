@@ -76,7 +76,6 @@ jobs:
               sys.exit(1)
 
 
-
   sintesis_ejercicio1:
     needs: ejercicio1
     runs-on: ubuntu-latest
@@ -89,8 +88,6 @@ jobs:
       - name: Sintetizando módulo(s)
         run: bash ../../.github/scripts/synthesis_script.sh
 
-
-        
 
   ejercicio2:
     needs: Verificando_cambios
@@ -144,9 +141,6 @@ jobs:
         run: bash ../../.github/scripts/synthesis_script.sh -a
 
 
-
-
-
   ejercicio3:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio3 == 'true' }}
@@ -186,7 +180,6 @@ jobs:
               sys.exit(1)
 
 
-
   sintesis_ejercicio3:
     needs: ejercicio3
     runs-on: ubuntu-latest
@@ -199,8 +192,6 @@ jobs:
       - name: Sintetizando módulo(s)
         run: bash ../../.github/scripts/synthesis_script.sh
 
-
-        
 
   ejercicio4_full_adder:
     needs: Verificando_cambios
@@ -241,7 +232,6 @@ jobs:
               sys.exit(1)
 
 
-
   sintesis_ejercicio4_fa:
     needs: ejercicio4_full_adder
     runs-on: ubuntu-latest
@@ -253,8 +243,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Sintetizando módulo(s)
         run: bash ../../../.github/scripts/synthesis_script.sh
-
-
 
 
   ejercicio4_ripple_carry_adder:
@@ -296,7 +284,6 @@ jobs:
               sys.exit(1)
 
 
-
   sintesis_ejercicio4_rca:
     needs: ejercicio4_ripple_carry_adder
     runs-on: ubuntu-latest
@@ -309,7 +296,6 @@ jobs:
       - name: Sintetizando módulo(s)
         run: bash ../../../.github/scripts/synthesis_script.sh
           
-
 
   ejercicio4_carry_lookahead_adder:
     needs: Verificando_cambios
@@ -350,8 +336,6 @@ jobs:
               sys.exit(1)
 
 
-
-
   sintesis_ejercicio4_cla:
     needs: ejercicio4_carry_lookahead_adder
     runs-on: ubuntu-latest
@@ -363,8 +347,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Sintetizando módulo(s)
         run: bash ../../../.github/scripts/synthesis_script.sh
-
-
 
         
   ejercicio5:
@@ -405,6 +387,7 @@ jobs:
               print("An error occurred:", e)
               sys.exit(1)
 
+
   sintesis_ejercicio5:
     needs: ejercicio5
     runs-on: ubuntu-latest
@@ -416,13 +399,3 @@ jobs:
         uses: actions/checkout@v4
       - name: Sintetizando módulo(s)
         run: bash ../../.github/scripts/synthesis_script.sh
-
-
-
-
-
-
-
-
-
-

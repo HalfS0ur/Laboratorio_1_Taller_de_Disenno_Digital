@@ -89,7 +89,7 @@ jobs:
         run: bash ../../.github/scripts/synthesis_script.sh
 
 
-  ejercicio2:
+  testbench_ejercicio2:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio2 == 'true' }}
     runs-on: ubuntu-latest
@@ -129,7 +129,7 @@ jobs:
 
 
   sintesis_ejercicio2:
-    needs: ejercicio2
+    needs: testbench_ejercicio2
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -141,7 +141,7 @@ jobs:
         run: bash ../../.github/scripts/synthesis_script.sh -a
 
 
-  ejercicio3:
+  testbench_ejercicio3:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio3 == 'true' }}
     runs-on: ubuntu-latest
@@ -181,7 +181,7 @@ jobs:
 
 
   sintesis_ejercicio3:
-    needs: ejercicio3
+    needs: testbench_ejercicio3
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -193,7 +193,7 @@ jobs:
         run: bash ../../.github/scripts/synthesis_script.sh
 
 
-  ejercicio4_full_adder:
+  testbench_ejercicio4_full_adder:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio4_full_adder == 'true' }}
     runs-on: ubuntu-latest
@@ -233,7 +233,7 @@ jobs:
 
 
   sintesis_ejercicio4_fa:
-    needs: ejercicio4_full_adder
+    needs: testbench_ejercicio4_full_adder
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -245,7 +245,7 @@ jobs:
         run: bash ../../../.github/scripts/synthesis_script.sh
 
 
-  ejercicio4_ripple_carry_adder:
+  testbench_ejercicio4_ripple_carry_adder:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio4_ripple_carry_adder == 'true' }}
     runs-on: ubuntu-latest
@@ -285,7 +285,7 @@ jobs:
 
 
   sintesis_ejercicio4_rca:
-    needs: ejercicio4_ripple_carry_adder
+    needs: testbench_ejercicio4_ripple_carry_adder
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -297,7 +297,7 @@ jobs:
         run: bash ../../../.github/scripts/synthesis_script.sh
           
 
-  ejercicio4_carry_lookahead_adder:
+  testbench_ejercicio4_carry_lookahead_adder:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio4_carry_lookahead_adder == 'true' }}
     runs-on: ubuntu-latest
@@ -337,7 +337,7 @@ jobs:
 
 
   sintesis_ejercicio4_cla:
-    needs: ejercicio4_carry_lookahead_adder
+    needs: testbench_ejercicio4_carry_lookahead_adder
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -349,7 +349,7 @@ jobs:
         run: bash ../../../.github/scripts/synthesis_script.sh
 
         
-  ejercicio5:
+  testbench_ejercicio5:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio5 == 'true' }}
     runs-on: ubuntu-latest
@@ -389,7 +389,7 @@ jobs:
 
 
   sintesis_ejercicio5:
-    needs: ejercicio5
+    needs: testbench_ejercicio5
     runs-on: ubuntu-latest
     defaults:
       run:

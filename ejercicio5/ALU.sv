@@ -28,7 +28,7 @@ module ALU #(
         
         case(ALUControl)
             4'h0: begin
-                    ALUResult = ALUA & ALUB; //and.
+                    ALUResult = ALUA & ALUB; //and..
                     ALUFlags = 0;
                   end
                   

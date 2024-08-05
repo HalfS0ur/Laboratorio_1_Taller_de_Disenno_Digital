@@ -10,4 +10,4 @@ XDC := ${current_dir}/Basys-3-Master.xdc
 #SDC := ${current_dir}/<name of your sdc file if applicable>
 
 #include <path to f4pga-examples root directory>/common/common.mk
-include ${current_dir}/common.mk
+include ${current_dir}/f4pga-examples/common/common.mk

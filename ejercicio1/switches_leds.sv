@@ -26,4 +26,4 @@ module switches_leds(
     assign led_po[14] = switch_pi[14] && !boton_pi[3];
     assign led_po[15] = switch_pi[15] && !boton_pi[3];
 endmodule
-//s.
+//s..

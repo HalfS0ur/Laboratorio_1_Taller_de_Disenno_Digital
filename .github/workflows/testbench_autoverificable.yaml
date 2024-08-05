@@ -37,7 +37,7 @@ jobs:
             - 'ejercicio5/**/*.sv'
 
 
-  ejercicio1:
+  testbench_ejercicio1:
     needs: Verificando_cambios
     if: ${{ needs.Verificando_cambios.outputs.ejercicio1 == 'true' }}
     runs-on: ubuntu-latest

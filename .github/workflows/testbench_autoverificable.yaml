@@ -77,7 +77,7 @@ jobs:
 
 
   sintesis_ejercicio1:
-    needs: ejercicio1
+    needs: testbench_ejercicio1
     runs-on: ubuntu-latest
     defaults:
       run:

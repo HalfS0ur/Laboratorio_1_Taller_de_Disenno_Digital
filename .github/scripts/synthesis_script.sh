@@ -73,7 +73,7 @@ while getopts "abc" opt; do
   case $opt in
     a)
       cd ..
-      symbiflow_synth -t mux_4_1 -v mux_4_1.sv -d artix7 -p xc7a35tcpg236-1
+      symbiflow_synth -t mux_4_1 -v *.sv -d artix7 -p xc7a35tcpg236-1
       ;;
     b)
       echo "Running command B"
